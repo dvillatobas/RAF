@@ -31,8 +31,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * Donde esta la configuracion del servidor.
      */
-    String strConfigFile =  "raf" 
-                          + File.separator
+    String strConfigFile = "bin" + File.separator + "raf" + File.separator
                           + "config"
                           + File.separator
                           + "movil.config";
@@ -224,17 +223,16 @@ public class GRaLauncher extends JFrame implements ActionListener,
     public void actionPerformed (ActionEvent e){
         if ( e.getActionCommand().equals ("Cargar...") ) {
            
-            File agentsPath = new File ( File.separator + "raf" + File.separator + "agentes" + File.separator );
+            File agentsPath = new File ("bin" + File.separator + "raf" + File.separator + "agentes" + File.separator );
          //   cargar los nombred de los agentes
            String[] lista = agentsPath.list();
-           System.out.println (lista);
            Object[] lis = (Object[]) agentsPath.list();
            String s = (String) JOptionPane.showInputDialog(
                      frame2,
                      "Elige un Agente",
                      "Agentes Moviles",
                      JOptionPane.PLAIN_MESSAGE,
-		     icon,
+                     icon,
                      lis,
                      null);
                      if (s != null) {
@@ -286,7 +284,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
       
         String name;
 
-        name = "raf.agentes." + s;
+        name = "raf.agentes." + s.split("\\.")[0];
         try{
             Class result;
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
