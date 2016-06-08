@@ -7,18 +7,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.*;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Properties;
-import java.util.Vector;
 import javax.swing.*;
 import javax.swing.event.*;
 
-import raf.agentes.*;
 import raf.principal.*;
 
 
@@ -29,34 +26,39 @@ public class GRaLauncher extends JFrame implements ActionListener,
                                             ListSelectionListener,
                                             AgencyListener{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Donde esta la configuracion del servidor.
      */
-    String strConfigFile = "bin" + File.separator + "raf" + File.separator
+    private String strConfigFile = "bin" + File.separator + "raf" + File.separator
                           + "config"
                           + File.separator
                           + "movil.config";
 
-    JFrame frame2;
-    JMenuBar menuBar;
-    JMenu menu;
-    JMenuItem menuItem;
-    ImageIcon icon = new ImageIcon("images/middle.gif");
+    private JFrame frame2;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem menuItem;
+    private ImageIcon icon = new ImageIcon("images/middle.gif");
     //JFileChooser fileChooser;
-    JPanel panel = new JPanel();
+    private JPanel panel = new JPanel();
 
-    JList list;
-    DefaultListModel listModel;
-    JScrollPane listScroller;
+    private JList<String> list;
+    private DefaultListModel<String> listModel;
+    private JScrollPane listScroller;
 
     /**
      * Maneja los byte codes de las clases cargadas.
      */
-    ClassManager classManager;
+    private ClassManager classManager;
 
     /**
      * Nombre del agente que fue seleccionado en la lista.
      */
-    String selectedRa = null;
+    private String selectedRa = null;
 
 	/**
 	 * La agencia que maneja todos los agentes.
@@ -66,12 +68,12 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * Direccion del servidor que registra todos los servidores de agentes del dominio.
      */
-    RaAddress raServer;
+    private RaAddress raServer;
 
     /**
      * N� puerto para las conexiones, por defecto 10101.
      */
-    int port;
+    private int port;
 
     /**
      * Crea un nuevo lanzador GRaLauncher.
@@ -139,7 +141,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
 
         raAgency = new RaAgency (this, classManager);
         raAgency.addAgencyListener (this);
-	setVisible(false);
+        setVisible(false);
 
        	// crea el menu principal
        	menuBar = new JMenuBar();
@@ -173,8 +175,8 @@ public class GRaLauncher extends JFrame implements ActionListener,
         panel.setLayout (new GridLayout(1,1));
         panel.setPreferredSize(new java.awt.Dimension(500, 300));
 
-        listModel = new DefaultListModel();
-        list = new JList (listModel);
+        listModel = new DefaultListModel<String>();
+        list = new JList<String> (listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.addListSelectionListener(this);
         listScroller = new JScrollPane (list);
@@ -224,9 +226,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
         if ( e.getActionCommand().equals ("Cargar...") ) {
            
             File agentsPath = new File ("bin" + File.separator + "raf" + File.separator + "agentes" + File.separator );
-         //   cargar los nombred de los agentes
-           String[] lista = agentsPath.list();
-           Object[] lis = (Object[]) agentsPath.list();
+         Object[] lis = (Object[]) agentsPath.list();
            String s = (String) JOptionPane.showInputDialog(
                      frame2,
                      "Elige un Agente",
@@ -247,9 +247,9 @@ public class GRaLauncher extends JFrame implements ActionListener,
          int i;
               i=0; 
                  Object[] v = new Object[50];
-                 Enumeration en = raAgency.getServers(this).elements();
+                 Enumeration<?> en = raAgency.getServers(this).elements();
                  while (en.hasMoreElements()){
-                 v[i] = (Object) en.nextElement();
+                 v[i] = en.nextElement();
                    i = i + 1;
                  }
 		String s = (String) JOptionPane.showInputDialog(
@@ -280,13 +280,13 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * carga un agente desde un fichero (poner un string como parametro)
      */
-    public void loadRa(String s){
+    private void loadRa(String s){
       
         String name;
 
         name = "raf.agentes." + s.split("\\.")[0];
         try{
-            Class result;
+            Class<?> result;
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
             result = loader.loadClass(name);
             if (result == null){
@@ -294,7 +294,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
                 return;
             }
 
-            Constructor cons[] = result.getConstructors();
+            Constructor<?> cons[] = result.getConstructors();
             Object obs[] = {raAgency.generateName()};
 	        Ra agent = (Ra) cons[0].newInstance(obs);
             raAgency.addRaOnCreation (agent, null);
@@ -319,7 +319,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * Envia el agente seleccionado a otra agencia.
      */
-    void editSendTo(String s){
+    private void editSendTo(String s){
         InetAddress destination = null;
         String server = null;
         String servername = null;
@@ -359,14 +359,14 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * Borra el agente seleccionado.
      */
-    void editDestroy(){
+    private void editDestroy(){
         raAgency.destroyRa (this, selectedRa);
     }
 
     /**
      * Inicializa el Thread del RaAgency.
      */
-    void startAgency(){
+    private void startAgency(){
 	System.out.println ("Inicializando la Agencia");
         raAgency.startAgency (this, port, raServer);
     }
@@ -374,7 +374,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
     /**
      * Para el Thread de la agencia.
      */
-    void stopAgency(){
+    private void stopAgency(){
 	System.out.println ("Parando la Agencia");
         raAgency.stopAgency (this);
     }
@@ -385,7 +385,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
      */
     public synchronized void valueChanged(ListSelectionEvent e){
         int pos = list.getSelectedIndex();
-        selectedRa = (String) listModel.elementAt (pos);
+        selectedRa = listModel.elementAt (pos);
         System.out.println ("seleccionado: " + selectedRa);
     }
 

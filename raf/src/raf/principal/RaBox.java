@@ -7,7 +7,7 @@ import java.util.Date;
 public class RaBox
 {
    
-    public Ra ra;
+	public Ra ra;
     
     
     public Thread thread;

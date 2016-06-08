@@ -12,6 +12,12 @@ public class RaAgency
     implements Serializable, RaListener, RaMessageListener
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	/**
      * No usado.
      */
     public final int version = 0;
@@ -20,14 +26,14 @@ public class RaAgency
     private Object parent;
 
   
-    private Hashtable agencys;
+    private Hashtable<?, ?> agencys;
 
     
 
     private RaAddress raServer;
 
   
-    private Vector agencyListeners;
+    private Vector<AgencyListener> agencyListeners;
 
    
     long delay = 100000;
@@ -45,17 +51,21 @@ public class RaAgency
     private volatile Thread listenThread = null;
 
    
-    protected ClassManager classManager;
+    private ClassManager classManager;
 
    
-    Hashtable boxes;
+    private Hashtable<String, RaBox> boxes;
 
     
-    ServerSocket serverSocket = null;
+    private ServerSocket serverSocket = null;
 
    
-    class ReceiveMessageThread extends Thread implements Serializable{
-        private Socket socket;
+    private class ReceiveMessageThread extends Thread implements Serializable{
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Socket socket;
         private RaAgency agency;
         private RaMessage message;
         private RaMessage outMessage;
@@ -63,7 +73,7 @@ public class RaAgency
         private Ra agent;
 
        
-        public ReceiveMessageThread(RaAgency b, Socket socket){
+        private ReceiveMessageThread(RaAgency b, Socket socket){
             this.socket = socket;
             this.agency = b;
         }
@@ -104,7 +114,7 @@ public class RaAgency
                     ByteArrayInputStream bis = new ByteArrayInputStream(message.binary);
                     ObjectInputStream ois = new ObjectInputStream (bis);
                     synchronized (this){
-                        agencys = (Hashtable) ois.readObject();
+                        agencys = (Hashtable<?, ?>) ois.readObject();
                     }
                 }
                 else if ( message.kind.equals("GET_CLASS") ){
@@ -187,12 +197,16 @@ public class RaAgency
     } // ReceiveMessageThread
 
 
-    class ListenThread extends Thread implements Serializable
+    private class ListenThread extends Thread implements Serializable
     {
-        private RaAgency parent;
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private RaAgency parent;
         private Socket socket = null;
 
-        public ListenThread (RaAgency parent){
+        private ListenThread (RaAgency parent){
             this.parent = parent;
         }
 
@@ -214,11 +228,15 @@ public class RaAgency
     } // Listen Thread
 
 
-    protected class SendMessageThread extends Thread implements Serializable{
-        RaMessage msg;
+    private class SendMessageThread extends Thread implements Serializable{
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private RaMessage msg;
 
         
-        public SendMessageThread(RaMessage msg){
+        private SendMessageThread(RaMessage msg){
             this.msg = msg;
         }
 
@@ -256,20 +274,20 @@ public class RaAgency
  
     public RaAgency (Object parent, ClassManager clManager){
         this.parent = parent;
-        agencyListeners = new Vector();
-        boxes = new Hashtable();
+        agencyListeners = new Vector<AgencyListener>();
+        boxes = new Hashtable<String, RaBox>();
         classManager = clManager;
     }
 
    
-    public void handleMessage (RaMessage msg){
+    private void handleMessage (RaMessage msg){
         System.out.println ("Message version: " + msg.version);
         System.out.println ("Message kind: " + msg.kind);
         System.out.println ("Message content: " + msg.content);
     }
 
   
-    protected void dispatch (Ra ra, RaAddress address){
+    private void dispatch (Ra ra, RaAddress address){
         //Thread thread;
         RaMessage msg;
         ra.onDispatch();
@@ -306,7 +324,7 @@ public class RaAgency
         if (listenThread != null) stopAgency(parent);
     }
 
-    public synchronized void addRaOnArrival(Ra ra, InetAddress sender){
+    private synchronized void addRaOnArrival(Ra ra, InetAddress sender){
         ra.setAgency(this);
         ra.addRaListener(this);
         ra.addRaMessageListener(this);
@@ -353,7 +371,7 @@ public class RaAgency
     }
 
   
-    public Enumeration getRaNames(Object sender){
+    public Enumeration<String> getRaNames(Object sender){
         return boxes.keys();
     }
 
@@ -465,10 +483,10 @@ public class RaAgency
         }
     }
 
-    public Hashtable getServers (Object sender){
-        Hashtable result = null;
+    public Hashtable<?, ?> getServers (Object sender){
+        Hashtable<?, ?> result = null;
         synchronized (this){
-            if (agencys != null) result = (Hashtable) agencys.clone();
+            if (agencys != null) result = (Hashtable<?, ?>) agencys.clone();
         }
         return result;
     }
@@ -485,10 +503,10 @@ public class RaAgency
     }
 
    
-    protected void fireRaCreated (String name){
-        Vector listeners;
+    private void fireRaCreated (String name){
+        Vector<AgencyListener> listeners;
         synchronized (this){
-            listeners = (Vector) agencyListeners.clone();
+            listeners = (Vector<AgencyListener>) agencyListeners.clone();
         }
         int size = listeners.size();
 
@@ -501,10 +519,10 @@ public class RaAgency
     }
 
    
-    protected void fireRaArrived (String name){
-        Vector listeners;
+    private void fireRaArrived (String name){
+        Vector<AgencyListener> listeners;
         synchronized (this){
-            listeners = (Vector) agencyListeners.clone();
+            listeners = (Vector<AgencyListener>) agencyListeners.clone();
         }
         int size = listeners.size();
 
@@ -518,10 +536,10 @@ public class RaAgency
 
    
 
-    protected void fireRaDestroyed (String name){
-        Vector listeners;
+    private void fireRaDestroyed (String name){
+        Vector<AgencyListener> listeners;
         synchronized (this){
-            listeners = (Vector) agencyListeners.clone();
+            listeners = (Vector<AgencyListener>) agencyListeners.clone();
         }
         int size = listeners.size();
 
@@ -534,10 +552,10 @@ public class RaAgency
     }
 
    
-    protected void fireRaLeft (String name){
-        Vector listeners;
+    private void fireRaLeft (String name){
+        Vector<AgencyListener> listeners;
         synchronized (this){
-            listeners = (Vector) agencyListeners.clone();
+            listeners = (Vector<AgencyListener>) agencyListeners.clone();
         }
         int size = listeners.size();
 

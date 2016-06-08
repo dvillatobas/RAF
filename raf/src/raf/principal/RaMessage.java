@@ -5,7 +5,13 @@ import java.io.Serializable;
 
 public class RaMessage implements Serializable{
   
-    public int version;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	public int version;
 
     
     public RaAddress recipient;

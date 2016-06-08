@@ -2,7 +2,7 @@ package raf.principal;
 
 /**
  * Los eventos que pueden ser lanzados por la agencia ra.
- * Esos eventos son lanzados cuando un agente Ra es añadido o
+ * Esos eventos son lanzados cuando un agente Ra es aï¿½adido o
  * borrado de una agencia.
  *
  * @author RMN
@@ -10,7 +10,11 @@ package raf.principal;
 public class AgencyEvent extends java.util.EventObject
 {
     /**
-     * ombre del agente que ha sido  añadido o borrado de la agencia.
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+     * ombre del agente que ha sido  aï¿½adido o borrado de la agencia.
      */
     private String name;
 
@@ -26,7 +30,7 @@ public class AgencyEvent extends java.util.EventObject
     }
 
     /**
-     * Devuelve el nombre del agente que ha sido añadido o borrado de la agencia.
+     * Devuelve el nombre del agente que ha sido aï¿½adido o borrado de la agencia.
      */
     public String getName(){
         return name;

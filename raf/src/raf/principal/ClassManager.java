@@ -7,6 +7,8 @@ import java.lang.Thread;
 import java.util.Hashtable;
 
 
+
+
 /**
  * Almacena las clases y los bytecodes de las clases cargadas.
  * Es responsable de borrar las clases si no hay mas agentes
@@ -18,22 +20,22 @@ public class ClassManager
      * Clase auxiliar del ClassManager para encapsular las clases y los bytecodes
      * de las clases cargadas.
      */
-    class ClassBox{
+    private class ClassBox{
 
         /**
          * La clase cargada.
          */
-        public Class classCode;
+        private Class<?> classCode;
 
         /**
          * Los correspondientes bytecodes de la clase cargada.
          */
-        public byte[] byteCode;
+        private byte[] byteCode;
 
         /**
          * Cuantos agentes de esta clase estan cargados.
          */
-        public int count;
+        private int count;
 
         /**
          * Crea un nuevo ClassBox.
@@ -42,7 +44,7 @@ public class ClassManager
          * @param cl La clase que va a ser almacenada.
          * @param byteCode El byte code de la clase.
          */
-        public ClassBox (Class cl, byte[] byteCode){
+        private ClassBox (Class<?> cl, byte[] byteCode){
             this.classCode = cl;
             this.byteCode = byteCode;
             count = 1;
@@ -52,7 +54,7 @@ public class ClassManager
     /**
      * Clase auxiliar del ClassManager que borra una clase despues del tiempo de retardo.
      */
-    class Remover extends Thread{
+    private class Remover extends Thread{
 
         /**
          * Nombre de la clase que va a ser borrada.
@@ -64,7 +66,7 @@ public class ClassManager
          */
         private long delay;
 
-        public Remover (String name, long delay){
+        private Remover (String name, long delay){
             this.delay = delay;
             this.name = name;
         }
@@ -88,18 +90,18 @@ public class ClassManager
      /**
       * El camino donde estan los ficheros de los agentes.
       */
-     public String agentsPath = null;
+     private String agentsPath = null;
 
     /**
      * Stores class data in ClassBoxes.
      */
-    Hashtable cache;
+    private Hashtable<String, ClassBox> cache;
 
     /*
      * Tiempo de espera en milisegundos antes de que se borre una clase del
      * ClassManager despues de que su contador llegue a cero.
      */
-    long delay;
+    private long delay;
 
     /**
      * Crea un nuevo ClassManager.
@@ -108,13 +110,13 @@ public class ClassManager
      * clase sea borada despues de que su contador haya llegado a cero.
      */
     public ClassManager(long delay, String agentsPath){
-        cache = new Hashtable();
+        cache = new Hashtable<String, ClassBox>();
         this.delay = delay;
         this.agentsPath = agentsPath;
     }
 
     /**
-     * Añade una nueva clase al class manager.
+     * Aï¿½ade una nueva clase al class manager.
      *
      * @param name Nombre de la clase.
      * @param cl La clase en si misma.
@@ -125,19 +127,12 @@ public class ClassManager
         cache.put (name, cb);
     }
 
-    /**
-     * Borra una clase y su bytecode desde el class manager
-     *
-     * @param name Nombre de la clase que va a ser borrada
-     */
-    public void removeClass (String name){
-        cache.remove(name);
-    }
+    
 
     /**
      * Borra la clase indicada
      */
-    public Class getClass (String name){
+    public Class<?> getClass (String name){
     	ClassBox box = (ClassBox) cache.get(name);
 	    if (box != null){
 	        return box.classCode;
@@ -161,7 +156,7 @@ public class ClassManager
                 System.out.println("Fichero: " + fileName);
             }
             catch (StringIndexOutOfBoundsException e){
-                System.err.println ("ClassManager: Nombre de fichero inválido!");
+                System.err.println ("ClassManager: Nombre de fichero invï¿½lido!");
                 fileName = name;
             }
 

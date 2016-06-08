@@ -1,11 +1,19 @@
 package raf.raservidor;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-import raf.principal.*;
+import raf.principal.RaAddress;
+import raf.principal.RaMessage;
 
 /**
  * Una clase que construye dominios administrativos.
@@ -16,23 +24,20 @@ import raf.principal.*;
 public class RaModel
 {
     /**
-     * Gestiona los mensajes que vienen a través de una conexión socket.
+     * Gestiona los mensajes que vienen a travï¿½s de una conexiï¿½n socket.
      * Los Mensajes pueden ser AGENCY_ONLINE o AGENCY_OFFLINE.
      */
-    class ReceiveMessageThread extends Thread{
+    private class ReceiveMessageThread extends Thread{
         private Socket socket;
         private RaModel raModel;
         private RaMessage message;
-        private RaMessage outMessage;
-        private InetAddress address;
-
         /**
          * Crea un nuevo thread para recibir el mensaje.
          *
          * @param b El RaModel de este thread.
          * @param socket Socket de la conexion entrante.
          */
-        public ReceiveMessageThread(RaModel b, Socket socket){
+        private ReceiveMessageThread(RaModel b, Socket socket){
             this.socket = socket;
             this.raModel = b;
         }
@@ -50,7 +55,7 @@ public class RaModel
                                     socket.getInputStream()));
                 outStream = new ObjectOutputStream(
                                     socket.getOutputStream());
-                address = socket.getInetAddress();
+                socket.getInetAddress();
             }
             catch (IOException e){
                 System.err.println("ReceiveMessageThread: IOException en los  streams de conexion al socket!");
@@ -99,12 +104,12 @@ public class RaModel
      * Escucha en el puerto especificado y lanza nuevos threads para recibir
      * mensajes de entrada.
      */
-    class ListenThread extends Thread
+    private class ListenThread extends Thread
     {
         private RaModel parent;
         private Socket socket = null;
 
-        public ListenThread (RaModel parent){
+        private ListenThread (RaModel parent){
             this.parent = parent;
         }
 
@@ -129,21 +134,21 @@ public class RaModel
     /**
      * Envia un RaMessage a otra agencia.
      */
-    class SendMessageThread extends Thread{
-        RaMessage msg;
+    private class SendMessageThread extends Thread{
+        private RaMessage msg;
 
         /**
          * Crea un thread que envia un mensaje a otro host.
-         * El mensaje debe contener la dirección destino!
+         * El mensaje debe contener la direcciï¿½n destino!
          *
          * @param msg El mensaje a enviar.
          */
-        public SendMessageThread(RaMessage msg){
+        private SendMessageThread(RaMessage msg){
             this.msg = msg;
         }
 
         /**
-         * Envia el mensaje a través deuna conexión de socket.
+         * Envia el mensaje a travï¿½s deuna conexiï¿½n de socket.
          */
         public void run(){
             Socket socket = null;
@@ -182,33 +187,33 @@ public class RaModel
     /**
      * Todas las agencias conectadas en el dominio
      */
-    Hashtable agencys;
+    private Hashtable<String, RaAddress> agencys;
 
     /**
      * Direccion de este servidor.
      */
-    RaAddress raAddress;
+    private RaAddress raAddress;
 
     /**
      * Puerto en el que escucha el servidor.
      */
-    int port;
+    private int port;
 
     /**
      * Socket en el puerto principal.
      */
-    ServerSocket serverSocket = null;
+    private ServerSocket serverSocket = null;
 
     /**
      * Thread que acepta conexiones de red.
      */
-    volatile Thread listenThread = null;
+    private volatile Thread listenThread = null;
 
     /**
      * Crea un nuevo servidor que maneja el estado del dominio.
      */
     public RaModel(){
-        agencys = new Hashtable();
+        agencys = new Hashtable<String, RaAddress>();
     }
 
     /**
@@ -227,11 +232,11 @@ public class RaModel
     }
 
     /**
-     * Notifica a todas las agencias conectadas al dominio qué otras agencias
+     * Notifica a todas las agencias conectadas al dominio quï¿½ otras agencias
      * estan en linea en el dominio
      */
      
-     public void broadcast(){
+     private void broadcast(){
         RaMessage message = null;
         Hashtable servers = null;
         ByteArrayOutputStream bos = null;

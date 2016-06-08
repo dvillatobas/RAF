@@ -3,7 +3,7 @@ package raf.principal;
 import java.io.Serializable;
 
 /**
- * La clase Ra implementa la clase base de un agente móvil.
+ * La clase Ra implementa la clase base de un agente mï¿½vil.
  * Es capaz de saltar de host a host y correr alli en su propio 
  * thread. Cada agente necesita un objeto RaAgency que maneje sus
  * peticiones y los envia y los recibe.
@@ -14,15 +14,25 @@ public class Ra implements Runnable, Serializable
 {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	/**
      * Lanza eventos de agente al RaListener.
      * Este thread se encesita para lanzar eventos de un modo asincrono.
      * Los eventos son asincronos debido a que el resultado de un evento
-     * puede ser la destrucción de un agente. Tambien algunas reacciones a esos
+     * puede ser la destrucciï¿½n de un agente. Tambien algunas reacciones a esos
      * eventos pueden consumir tiempo.
      */
-    class FireEventThread extends Thread implements Serializable{
+    private class FireEventThread extends Thread implements Serializable{
 
         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		/**
          * El evento que tiene que ser lanzado.
          */
         private RaEvent event;
@@ -30,12 +40,12 @@ public class Ra implements Runnable, Serializable
         /**
          * @param e El evento que tiene que ser lanzado.
          */
-        public FireEventThread (RaEvent e){
+        private FireEventThread (RaEvent e){
             event = e;
         }
 
         /**
-         * Chequea los id de las llamadas al método apropiado del
+         * Chequea los id de las llamadas al mï¿½todo apropiado del
          * listener de eventos.
          */
         public void run(){
@@ -57,12 +67,16 @@ public class Ra implements Runnable, Serializable
      * Lanza RaMessage al RaMessageListener.
      * Este thread se necesita para lanzar mensajes de un modo asincrono.
      * Los mensajes se deben lanzar de modo asincrono debido a que un resultado del lanzamiento
-     * de mensajes podria ser continuar la comunicación entre
+     * de mensajes podria ser continuar la comunicaciï¿½n entre
      * objetos. 
      */
-    class FireMessageThread extends Thread implements Serializable{
+    private class FireMessageThread extends Thread implements Serializable{
 
         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		/**
          * El evento que va a ser lanzado.
          */
         private RaMessageEvent e;
@@ -70,12 +84,12 @@ public class Ra implements Runnable, Serializable
         /**
          * @param m El mensaje que va a ser lanzado.
          */
-        public FireMessageThread (RaMessageEvent e){
+        private FireMessageThread (RaMessageEvent e){
             this.e = e;
         }
 
         /**
-         * Llama al método RaMessage(m) del RaMesssageListener.
+         * Llama al mï¿½todo RaMessage(m) del RaMesssageListener.
          */
         public void run(){
             messageListener.raMessage(e);
@@ -95,7 +109,7 @@ public class Ra implements Runnable, Serializable
 
     /**
      * Este es el destino al que el agente quiere ser transferido.
-     * Es leido por la agencia a través del método getDestination().
+     * Es leido por la agencia a travï¿½s del mï¿½todo getDestination().
      */
     protected RaAddress destination;
 
@@ -103,13 +117,13 @@ public class Ra implements Runnable, Serializable
      * El listener de eventos que recibe todos los RaEvents. Es normalmente puesto
      * puesto por la agencia en llegada.
      */
-    protected transient RaListener raListener;
+    private transient RaListener raListener;
 
     /**
      * El listener de emnsajes que recibe todos los RaMessages. Es normalmente puesto por la agencia 
      * en llegada.
      */
-    protected transient RaMessageListener messageListener;
+    private transient RaMessageListener messageListener;
 
     /**
      * Construye un nuevo agente con su nombre.
@@ -117,7 +131,7 @@ public class Ra implements Runnable, Serializable
      * administrar agentes en el servidor.
      *
      * @param name El nombre del agente. La clase Agencia proporciona un
-     *             metodo que genera un nombre único.
+     *             metodo que genera un nombre ï¿½nico.
      */
     public Ra(String name){
         this.name = name;

@@ -1,11 +1,9 @@
 package raf.principal;
 
 import java.io.*;
-import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 import java.net.UnknownHostException;
-import java.util.Hashtable;
 import java.security.CodeSource;
 import java.security.SecureClassLoader;
 
@@ -15,13 +13,13 @@ import java.security.SecureClassLoader;
 public class RaClassLoader extends SecureClassLoader{
 
    
-    ClassManager classManager;
+    private ClassManager classManager;
 
 
-    RaAddress agency;
+    private RaAddress agency;
 
    
-    RaAddress sourceHost;
+    private RaAddress sourceHost;
 
 
   
@@ -34,13 +32,10 @@ public class RaClassLoader extends SecureClassLoader{
 
 
  
-    protected byte loadClassData(String name)[]
+    private byte loadClassData(String name)[]
     throws ClassNotFoundException{
         byte result[] = null;
         Socket socket = null;
-        InputStream inputStream = null;
-        OutputStream outputStream = null;
-
         System.out.println("RaClassLoader.loadClassData() ha sido llamado por: " + name);
 
         try{
@@ -85,7 +80,7 @@ public class RaClassLoader extends SecureClassLoader{
         System.out.println("Ha sido llamado findClass en RaClassLoader!! " + name);
 
 
-	Class c = classManager.getClass(name);
+	Class<?> c = classManager.getClass(name);
         if (c != null) {
             System.out.println("Recuperando la clase desde cache: " + name);
             classManager.inc(name);

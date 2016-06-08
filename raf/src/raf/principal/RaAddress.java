@@ -8,7 +8,13 @@ import java.net.UnknownHostException;
 public final class RaAddress implements Serializable{
     
    
-    public InetAddress host;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	public InetAddress host;
     
    
     public int port;
