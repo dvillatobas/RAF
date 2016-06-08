@@ -1,15 +1,12 @@
-package org.kaariboga.agents;
+package raf.agentes;
 
-import java.lang.InterruptedException;
-import java.lang.Thread;
-
-import org.kaariboga.core.Kaariboga;
+import raf.principal.Ra;
 
 
 /**
  * The Reproducer agent is able to load other agents.
  */
-public class Reproducer extends Kaariboga
+public class Reproducer extends Ra
 {
     /**
      * Number of childs the agent will create.
@@ -35,9 +32,9 @@ public class Reproducer extends Kaariboga
             System.out.println ("Hurray, I am born.");
             Thread.currentThread().sleep(500);
             for (int i = 0; i < nChilds; i++){       
-  	        Reproducer agent = new Reproducer(base.generateName());
+  	        Reproducer agent = new Reproducer(agency.generateName());
   	        agent.nChilds = nChilds - 1;
-                base.addKaaribogaOnCreation (agent, null);
+                agency.addRaOnCreation (agent, null);
             }
         }
         catch(java.lang.InterruptedException e){}

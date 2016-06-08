@@ -1,16 +1,13 @@
-package org.kaariboga.agents;
+package raf.agentes;
 
-import java.lang.Thread;
-
-import org.kaariboga.core.Kaariboga;
-import org.kaariboga.core.KaaribogaEvent;
+import raf.principal.Ra;
 
 
 /**
  * Demonstrates the handling of time consuming applications by
  * couning up to a given number.
  */
-public class Counter extends Kaariboga
+public class Counter extends Ra
 {
     /**
      * Used to end the thread.

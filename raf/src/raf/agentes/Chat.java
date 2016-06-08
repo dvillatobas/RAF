@@ -46,9 +46,9 @@ public class Chat extends Ra
          s = "hola que tal";
         v = new Vector();
         RaAddress address;
-        Enumeration enum = agency.getServers(this).elements();
-        while (enum.hasMoreElements()){
-            address = (RaAddress) enum.nextElement();
+        Enumeration en = agency.getServers(this).elements();
+        while (en.hasMoreElements()){
+            address = (RaAddress) en.nextElement();
             v.addElement (address);
         }
     }
@@ -142,7 +142,7 @@ public class Chat extends Ra
         contentPane.add(statusPane, BorderLayout.CENTER);
         contentPane.add(aceptar,JButton.CENTER);
 	setContentPane(contentPane);
-        //a¤adir el boton  de aceptar que guarda el texto del textpane
+        //aï¿½adir el boton  de aceptar que guarda el texto del textpane
     }
 
  public void actionPerformed (java.awt.event.ActionEvent e){

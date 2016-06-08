@@ -1,16 +1,12 @@
-package org.kaariboga.agents;
+package raf.agentes;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import org.kaariboga.core.Kaariboga;
-import org.kaariboga.core.KaaribogaAddress;
-import org.kaariboga.core.KaaribogaEvent;
+import raf.principal.Ra;
 
 /**
  * Example of a simple kaariboga that travels to another base
  * returns and destroys itself.
  */
-public class ReturnAgent extends Kaariboga
+public class ReturnAgent extends Ra
 {
     /**
      * Number of trips.
@@ -33,7 +29,7 @@ public class ReturnAgent extends Kaariboga
      * initialisation on the agent and before run.
      */
     public void onCreate(){
-        destination = base.getBaseAddress(this);
+        destination = agency.getAgencyAddress(this);
     }
 
     /**

@@ -1,5 +1,5 @@
 
-package raf.servidor;
+package raf.config;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -70,7 +70,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
     RaAddress raServer;
 
     /**
-     * Nº puerto para las conexiones, por defecto 10101.
+     * Nï¿½ puerto para las conexiones, por defecto 10101.
      */
     int port;
 
@@ -93,7 +93,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
             in.close();
         }
         catch (FileNotFoundException e){
-            System.err.println ("GraLauncher: No se puede abrir el fichero de configuración!");
+            System.err.println ("GraLauncher: No se puede abrir el fichero de configuraciï¿½n!");
         }
         catch (IOException e){
             System.err.println ("GRaLauncher: Ha fallado la lectura del fichero!");
@@ -249,9 +249,9 @@ public class GRaLauncher extends JFrame implements ActionListener,
          int i;
               i=0; 
                  Object[] v = new Object[50];
-                 Enumeration enum = raAgency.getServers(this).elements();
-                 while (enum.hasMoreElements()){
-                 v[i] = (Object) enum.nextElement();
+                 Enumeration en = raAgency.getServers(this).elements();
+                 while (en.hasMoreElements()){
+                 v[i] = (Object) en.nextElement();
                    i = i + 1;
                  }
 		String s = (String) JOptionPane.showInputDialog(

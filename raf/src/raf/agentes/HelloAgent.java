@@ -1,14 +1,11 @@
-package org.kaariboga.agents;
+package raf.agentes;
 
-import java.lang.InterruptedException;
-
-import org.kaariboga.core.Kaariboga;
-import org.kaariboga.core.KaaribogaEvent;
+import raf.principal.Ra;
 
 /**
  * The HelloAgents just prints Hello World to the screen.
  */
-public class HelloAgent extends Kaariboga
+public class HelloAgent extends Ra
 {
     /**
      * How often did the agent travel?

@@ -31,11 +31,11 @@ public class ServerLister extends Ra
      */
     public void run(){
         RaAddress address;
-        Enumeration enum = agency.getServers(this).elements();
+        Enumeration en = agency.getServers(this).elements();
         System.out.println("---------------------------------------------");
         System.out.println("Servers connected to the domain:");
-        while (enum.hasMoreElements()){
-            address = (RaAddress) enum.nextElement();
+        while (en.hasMoreElements()){
+            address = (RaAddress) en.nextElement();
             System.out.println (address.host.toString() + ":" + Integer.toString(address.port));
         }
         System.out.println("---------------------------------------------");

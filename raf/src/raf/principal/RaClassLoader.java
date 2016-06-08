@@ -46,7 +46,7 @@ public class RaClassLoader extends SecureClassLoader{
         try{
             socket = new Socket(sourceHost.host, sourceHost.port);
 
-            System.out.println("el cargador ha establecido la conexión");
+            System.out.println("el cargador ha establecido la conexiï¿½n");
 
             ObjectOutputStream outStream = new ObjectOutputStream(
                         socket.getOutputStream());
@@ -97,12 +97,13 @@ public class RaClassLoader extends SecureClassLoader{
         
         if (data==null) throw new ClassNotFoundException(name);
 	try {
-	    System.out.println("Intentando definir la Clase: " + name + " tamaño: " + data.length);
+	    System.out.println("Intentando definir la Clase: " + name + " tamaï¿½o: " + data.length);
   
          
-            URL srcURL = new URL ("http", sourceHost.host.getHostAddress(), sourceHost.port, "/");
-            CodeSource codeSrc = new CodeSource (srcURL, null); 
-            c = defineClass (name, data, 0, data.length, codeSrc);
+	    URL srcURL = new URL ("http", sourceHost.host.getHostAddress(), sourceHost.port, "/");
+        java.security.cert.Certificate[] cs =  null;
+        CodeSource codeSrc = new CodeSource (srcURL,cs); 
+        c = defineClass (name, data, 0, data.length, codeSrc);
         }
 	catch (java.net.MalformedURLException e) {
 	    System.out.println("Secure Class Loader: URL mal formada!");

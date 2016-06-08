@@ -1,18 +1,12 @@
-package org.kaariboga.agents;
+package raf.agentes;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import javax.swing.*;
-
-import org.kaariboga.core.Kaariboga;
-import org.kaariboga.core.KaaribogaAddress;
-import org.kaariboga.core.KaaribogaEvent;
-import org.kaariboga.core.KaaribogaMessage;
+import raf.principal.Ra;
+import raf.principal.RaMessage;
 
 /**
  * The MessageReceiver agent waits for a message and then prints it out.
  */
-public class MessageReceiver extends Kaariboga
+public class MessageReceiver extends Ra
 {
     /**
      * Just initialize the super class.
@@ -30,7 +24,7 @@ public class MessageReceiver extends Kaariboga
      *
      * @param msg The message that this agent receives.
      */ 
-    public void handleMessage (KaaribogaMessage msg){
+    public void handleMessage (RaMessage msg){
         System.out.println ("MessageReceiver: Received Message.");	
         System.out.println ("           Kind: " + msg.kind);	
         System.out.println ("        Content: " + msg.content);	

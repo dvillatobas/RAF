@@ -44,9 +44,9 @@ public class HelloDomain extends Ra
         i = 0;
         v = new Vector();
         RaAddress address;
-        Enumeration enum = agency.getServers(this).elements();
-        while (enum.hasMoreElements()){
-           address = (RaAddress) enum.nextElement();
+        Enumeration en = agency.getServers(this).elements();
+        while (en.hasMoreElements()){
+           address = (RaAddress) en.nextElement();
             v.addElement (address);
          
         }
