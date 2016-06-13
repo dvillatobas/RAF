@@ -244,29 +244,30 @@ public class GRaLauncher extends JFrame implements ActionListener,
   
         }
         if ( e.getActionCommand().equals ("editSendTo") ) {
-         int i;
-              i=0; 
-                 Object[] v = new Object[50];
-                 Enumeration<?> en = raAgency.getServers(this).elements();
-                 while (en.hasMoreElements()){
-                 v[i] = en.nextElement();
-                   i = i + 1;
-                 }
-		String s = (String) JOptionPane.showInputDialog(
-                     frame2,
-                     "Elige una Agencia",
-                     "Agencia Destino",
-                     JOptionPane.PLAIN_MESSAGE,
+        	 int i = 0;
+	         Object[] v = new Object[50];
+	         
+	         Enumeration<?> en = raAgency.getServers(this).elements();
+	         
+	         while (en.hasMoreElements()){
+	        	 v[i] = en.nextElement();
+	        	 i = i + 1;
+	         }
+	         String s = (String) JOptionPane.showInputDialog(
+	             frame2,
+	             "Elige una Agencia",
+	             "Agencia Destino",
+	             JOptionPane.PLAIN_MESSAGE,
 		     icon,
 		     v,
-                     null);
-                     if (s != null) {
-                         s = s.trim();
-                         if (s.length() >0 ) {
-                           System.out.println (s);
-                             editSendTo (s);
-                             }
+		     null);
+             if (s != null) {
+                 s = s.trim();
+                 if (s.length() >0 ) {
+                   System.out.println (s);
+                     editSendTo (s);
                      }
+             }
      
             editSendTo(s);
         }
@@ -385,8 +386,13 @@ public class GRaLauncher extends JFrame implements ActionListener,
      */
     public synchronized void valueChanged(ListSelectionEvent e){
         int pos = list.getSelectedIndex();
-        selectedRa = listModel.elementAt (pos);
-        System.out.println ("seleccionado: " + selectedRa);
+        if (pos == -1){
+        	selectedRa = null;
+        }else{
+        	selectedRa = listModel.elementAt (pos);
+            System.out.println ("seleccionado: " + selectedRa);
+        }
+        
     }
 
     /**
@@ -411,6 +417,8 @@ public class GRaLauncher extends JFrame implements ActionListener,
      */
     public void agencyRaLeft (AgencyEvent e){
         listModel.removeElement ((String)e.getName());
+        selectedRa = null;
+        
     }
 
     /**
@@ -418,6 +426,7 @@ public class GRaLauncher extends JFrame implements ActionListener,
      */
     public void agencyRaDestroyed (AgencyEvent e){
         listModel.removeElement ((String)e.getName());
+        selectedRa = null;
     }
 
 

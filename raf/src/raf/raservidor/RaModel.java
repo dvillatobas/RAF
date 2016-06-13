@@ -238,20 +238,20 @@ public class RaModel
      
      private void broadcast(){
         RaMessage message = null;
-        Hashtable servers = null;
+        Hashtable<String, RaAddress> servers = null;
         ByteArrayOutputStream bos = null;
         ObjectOutputStream oos = null;
 
         try{
             synchronized (this){
-                servers = (Hashtable) agencys.clone();
+                servers =  (Hashtable<String, RaAddress>) agencys.clone();
             }
             bos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream (bos);
             oos.writeObject (servers);
 
             // envia un mensaje AGENCYS a todos los servidores conectados.
-            for (Enumeration e = servers.elements(); e.hasMoreElements();){
+            for (Enumeration<RaAddress> e = servers.elements(); e.hasMoreElements();){
                 message = new RaMessage (raAddress,
                                             (RaAddress)e.nextElement(),
                                             "AGENCYS",
