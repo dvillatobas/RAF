@@ -1,0 +1,36 @@
+package com.raf.service.raservidor;
+
+import com.raf.service.principal.RaAddress;
+
+/**
+ * Eventos that son lanzados por el ramodel para notifcar a los listeners si
+ * los servidores se conectan o desconectan desde el dominio.
+ */
+public class RaModelEvent extends java.util.EventObject{
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+     * Direccion de la agencia que se desconecta o desconecta del dominio.
+     */
+    private RaAddress agency;
+
+    /**
+     * @param sender Object que lanza el evento.
+     * @param agency El servidor de agentes que se ha conectado o desconectado del dominio.
+     */
+    public RaModelEvent (Object sender, RaAddress agency){
+        super (sender);
+        this.agency = agency;
+   }
+
+    /**
+     * Devuelve la direccion del servidor que se ha conectado o deconectado del dominio.
+     */
+    public RaAddress getAgency(){
+        return agency;
+    }
+
+}

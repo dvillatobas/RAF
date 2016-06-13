@@ -1,0 +1,38 @@
+package com.raf.service.principal;
+
+/**
+ * Los eventos que pueden ser lanzados por la agencia ra.
+ * Esos eventos son lanzados cuando un agente Ra es a�adido o
+ * borrado de una agencia.
+ *
+ * @author RMN
+ */
+public class AgencyEvent extends java.util.EventObject
+{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
+     * ombre del agente que ha sido  a�adido o borrado de la agencia.
+     */
+    private String name;
+
+    /**
+     * Crea un nuevo evento de agencia.
+     *
+     * @param obj El objeto que creo el evento.
+     * @param name Nombre del agente.
+     */
+    public AgencyEvent(Object obj, String name){
+        super(obj);
+        this.name = name;
+    }
+
+    /**
+     * Devuelve el nombre del agente que ha sido a�adido o borrado de la agencia.
+     */
+    public String getName(){
+        return name;
+    }
+}

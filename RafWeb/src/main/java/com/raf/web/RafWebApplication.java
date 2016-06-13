@@ -1,0 +1,12 @@
+package com.raf.web;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class RafWebApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(RafWebApplication.class, args);
+	}
+}
