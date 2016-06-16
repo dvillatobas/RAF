@@ -1,1 +1,1 @@
-eas
+Trataré de crear una interface web con angular 2 y arrancare el servidor con un componente en spring boot. Dicho de otra forma, es una sustitución de la interfaz gráfica con las mismas opciones que ofrecía.

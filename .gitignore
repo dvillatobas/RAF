@@ -1,0 +1,29 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/ui_angular/dist
+/ui_angular/tmp
+
+# dependencies
+/ui_angular/node_modules
+/ui_angular/bower_components
+
+# IDEs and editors
+/ui_angular/.idea
+
+# misc
+/ui_angular/.sass-cache
+/ui_angular/connect.lock
+/ui_angular/coverage/*
+/ui_angular/libpeerconnection.log
+/ui_angularnpm-debug.log
+/ui_angulartestem.log
+/ui_angular/typings
+
+# e2e
+/ui_angular/e2e/*.js
+/ui_angular/e2e/*.map
+
+#System Files
+/ui_angular.DS_Store
+/ui_angularThumbs.db
