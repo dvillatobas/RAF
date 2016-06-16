@@ -1,3 +1,38 @@
-<h1>
-  {{title}}
-</h1>
+<div class="contenido">
+  <div class="row">
+    <h3 class="mitad" *ngIf="agentesCargados.length != 0">Listado de agentes activos</h3>
+    <h3 *ngIf="agentesCargados.length == 0" class="mitad pull-left">No hay agentes cargados</h3>
+    <button (click)="mostrarAgentes()" class="pull-right btn btn-default btn-cargar">
+      Cargar agente
+      <span *ngIf="!cargar" class="glyphicon glyphicon-chevron-left"></span>
+      <span *ngIf="cargar" class="glyphicon glyphicon-chevron-right"></span>
+    </button>
+  </div>
+  <div class="row">
+
+    <div [class]="cargar?'list-group pull-left panel mitad':'list-group todo pull-left panel'" *ngIf="agentesCargados">
+      <div *ngFor="let a of agentesCargados" class="list-group-item cargados">
+        <h4>({{a.id}}) {{a.name}}
+            <button (click)="eliminarAgente(a)" class="btn btn-danger pull-right">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </h4>
+      </div>
+    </div>
+
+    <h3 *ngIf="agentes.length == 0" class="mitad pull-right">No hay agentes disponibles</h3>
+    <div class="list-group panel pull-right agentes" *ngIf="cargar">
+      <div *ngFor="let a of agentes" class="list-group-item">
+        <h4>{{a}}
+            <button (click)="cargarAgente(a)" class="btn btn-success pull-right">
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+          </h4>
+      </div>
+    </div>
+  </div>
+  <div class="row log">
+    <log></log>
+  </div>
+
+</div>
