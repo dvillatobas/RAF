@@ -2,6 +2,7 @@ import { Component, Inject} from '@angular/core';
 import { AgenteService, Agente } from './agente.service';
 import { CollapseDirective } from 'ng2-bootstrap/ng2-bootstrap';
 import { LogComponent } from './log.component/log.component';
+import { Http, HTTP_PROVIDERS } from '@angular/http';
 
 @Component({
   moduleId: module.id,
@@ -9,7 +10,7 @@ import { LogComponent } from './log.component/log.component';
   templateUrl: 'ui-angular.component.html',
   styleUrls: ['ui-angular.component.css'],
   directives: [CollapseDirective, LogComponent],
-  providers: [AgenteService]
+  providers: [AgenteService, HTTP_PROVIDERS]
 })
 
 

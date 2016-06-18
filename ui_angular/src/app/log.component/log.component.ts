@@ -10,7 +10,10 @@ export class LogComponent implements OnInit {
     constructor() { }
 
     ngOnInit() { 
-        this.lineas = ['hola', '[eeeee]', 'que tal'];
+        this.log();
     }
 
+    log(){
+        
+    }
 }

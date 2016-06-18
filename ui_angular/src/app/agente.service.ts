@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
 
 
 export class Agente{
@@ -13,6 +14,12 @@ export class Agente{
 export class AgenteService {
 
 
-    constructor() { }
+    constructor(
+        private http:Http
+    ) { }
+
+    refreshLog(){
+        this.http.get('');
+    }
 
 }
