@@ -22,6 +22,10 @@ import raf.principal.RaAddress;
 public class Chat extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * List of all the servers in the domain.
      */
     Vector v;

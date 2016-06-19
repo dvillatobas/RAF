@@ -122,7 +122,7 @@ public class ClassManager
      * @param cl La clase en si misma.
      * @param byteCode Byte code de la clase.
      */
-    public void addClass (String name, Class cl, byte[] byteCode){
+    public void addClass (String name, Class<?> cl, byte[] byteCode){
         ClassBox cb = new ClassBox (cl, byteCode);
         cache.put (name, cb);
     }

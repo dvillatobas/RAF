@@ -9,6 +9,11 @@ import raf.principal.Ra;
 public class Counter extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Used to end the thread.
      */
     volatile Thread shouldLive;

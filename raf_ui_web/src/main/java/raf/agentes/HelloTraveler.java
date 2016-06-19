@@ -15,6 +15,11 @@ import raf.principal.RaAddress;
 public class HelloTraveler extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Just initialize the super class.
      *
      * @param name The name of the agent. This name has to be
@@ -34,7 +39,7 @@ public class HelloTraveler extends Ra
 
         try{
             JOptionPane dialog = new JOptionPane();
-            String server = dialog.showInputDialog (null, "Where do you want me to go today?");
+            String server = JOptionPane.showInputDialog (null, "Where do you want me to go today?");
             target = InetAddress.getByName(server);
         }
         catch (UnknownHostException e){

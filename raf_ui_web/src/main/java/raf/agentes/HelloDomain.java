@@ -17,9 +17,14 @@ import raf.principal.RaAddress;
 public class HelloDomain extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * List of all the servers in the domain.
      */
-    Vector v;
+    Vector<RaAddress> v;
 
     /**
      * Points to the next destination in v.
@@ -42,9 +47,9 @@ public class HelloDomain extends Ra
      */
     public void onCreate(){
         i = 0;
-        v = new Vector();
+        v = new Vector<RaAddress>();
         RaAddress address;
-        Enumeration en = agency.getServers(this).elements();
+        Enumeration<?> en = agency.getServers(this).elements();
         while (en.hasMoreElements()){
            address = (RaAddress) en.nextElement();
             v.addElement (address);
@@ -86,11 +91,16 @@ public class HelloDomain extends Ra
     public class Popup extends Thread implements Serializable{
 
         /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		/**
          * Pop up window.
          */
         public void run(){
             JOptionPane dialog = new JOptionPane();
-            dialog.showMessageDialog (null, "Hi there!");
+            JOptionPane.showMessageDialog (null, "Hi there!");
         }
     }
 

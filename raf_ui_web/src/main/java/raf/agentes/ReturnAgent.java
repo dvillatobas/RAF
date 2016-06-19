@@ -9,6 +9,10 @@ import raf.principal.Ra;
 public class ReturnAgent extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Number of trips.
      */
     int trips = 0;

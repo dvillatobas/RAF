@@ -15,6 +15,11 @@ import raf.principal.RaAddress;
 public class ServerLister extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Just initialize the super class.
      *
      * @param name The name of the agent. This name has to be
@@ -30,7 +35,7 @@ public class ServerLister extends Ra
      */
     public void run(){
         RaAddress address;
-        Enumeration en = agency.getServers(this).elements();
+        Enumeration<?> en = agency.getServers(this).elements();
         System.out.println("---------------------------------------------");
         System.out.println("Servers connected to the domain:");
         while (en.hasMoreElements()){

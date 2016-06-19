@@ -14,6 +14,11 @@ import raf.principal.Ra;
 public class Executer extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Runtime object of the current JVM.
      * Declared as an object varible to demonstrate the use of transient.
      */

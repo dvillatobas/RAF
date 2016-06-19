@@ -9,6 +9,11 @@ import raf.principal.RaMessage;
 public class MessageReceiver extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Just initialize the super class.
      *
      * @param name The name of the agent. This name has to be

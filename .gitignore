@@ -3,6 +3,7 @@
 # compiled output
 /ui_angular/dist
 /ui_angular/tmp
+/raf_ui_web/src/main/resources/static
 
 # dependencies
 /ui_angular/node_modules

@@ -8,6 +8,10 @@ import raf.principal.Ra;
 public class Reproducer extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Number of childs the agent will create.
      */
     public int nChilds = 3;
@@ -29,7 +33,7 @@ public class Reproducer extends Ra
     public void run(){
         try{
             System.out.println ("Hurray, I am born.");
-            Thread.currentThread().sleep(500);
+            Thread.sleep(500);
             for (int i = 0; i < nChilds; i++){       
   	        Reproducer agent = new Reproducer(agency.generateName());
   	        agent.nChilds = nChilds - 1;

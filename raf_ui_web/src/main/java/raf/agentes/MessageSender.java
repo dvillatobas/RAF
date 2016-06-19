@@ -14,6 +14,11 @@ import raf.principal.RaMessage;
 public class MessageSender extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Just initialize the super class.
      *
      * @param name The name of the agent. This name has to be
@@ -31,7 +36,7 @@ public class MessageSender extends Ra
 
         // open dialog for message
         JOptionPane dialog = new JOptionPane();
-        String content = dialog.showInputDialog (null, "Please type in a message.");
+        String content = JOptionPane.showInputDialog (null, "Please type in a message.");
 
         // send Message
         // Note: if you want to send Messages to other servers you will
@@ -39,7 +44,7 @@ public class MessageSender extends Ra
         // KaaribogaAddress baseAdr  = base.getBaseAddress(this);
         // KaaribogaAddress sender  = new KaaribogaAddress (baseAdr.host, baseAdr.port, getName());
         // KaaribogaAddress recipient = new KaaribogaAddress (host, port, name);
-        Enumeration names = agency.getRaNames (this);
+        Enumeration<?> names = agency.getRaNames (this);
         while (names.hasMoreElements()){
             // simple constructors for address save for local use
             RaAddress sender  = new RaAddress (getName());

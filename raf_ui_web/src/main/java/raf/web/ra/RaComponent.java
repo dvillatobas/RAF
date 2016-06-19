@@ -251,9 +251,10 @@ public class RaComponent implements AgencyListener{
 
         name = "target.classes.raf.agentes." + s.split("\\.")[0];
         try{
-            Class result;
+            Class<?> result;
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
             result = loader.loadClass(name);
+            
             if (result == null){
                 System.err.println ("GRaLauncher: No se pudo cargar la clase! clase no encontrada!");
                 return;
