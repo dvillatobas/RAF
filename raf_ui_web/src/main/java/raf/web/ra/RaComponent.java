@@ -240,16 +240,8 @@ public class RaComponent implements AgencyListener{
       
         String name;
         
-        File miDir = new File (".");
-        try {
-          System.out.println ("Directorio actual: " + miDir.getCanonicalPath());
-          }
-        catch(Exception e) {
-          e.printStackTrace();
-          }
-        
 
-        name = "target.classes.raf.agentes." + s.split("\\.")[0];
+        name = "raf.agentes." + s.split("\\.")[0];
         try{
             Class<?> result;
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
@@ -262,9 +254,15 @@ public class RaComponent implements AgencyListener{
 
             Constructor<?> cons[] = result.getConstructors();
             Object obs[] = {raAgency.generateName()};
-	        Ra agent = (Ra) cons[0].newInstance(obs);
-            raAgency.addRaOnCreation (agent, null);
-            listaAgentes.add(s);
+	        Object agent =  cons[0].newInstance(obs);
+	        if(agent instanceof Ra){
+	        	Ra a = (Ra) agent;
+	        	raAgency.addRaOnCreation (a, null);
+	            listaAgentes.add(s);
+	        }else{
+	        	System.out.println("no va");
+	        }
+	        
         }
         catch (InvocationTargetException e){
             System.err.println ("! GRaLauncher: No se ha podidio cargar la clase " + e);
