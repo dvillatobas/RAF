@@ -1,0 +1,1 @@
+//# sourceMappingURL=../ng2.component.js.map

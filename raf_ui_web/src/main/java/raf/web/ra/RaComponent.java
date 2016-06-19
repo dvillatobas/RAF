@@ -1,13 +1,16 @@
 package raf.web.ra;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
@@ -50,7 +53,9 @@ public class RaComponent implements AgencyListener{
      */
     private int port;
     
-    private String[] listaClases;
+    private List<String> listaClases;
+    
+    public ByteArrayOutputStream log;
 	
     
     private List<String> listaAgentes;
@@ -134,8 +139,8 @@ public class RaComponent implements AgencyListener{
         raAgency = new RaAgency (this, classManager);
         raAgency.addAgencyListener (this);
         
-		File agentsPath = new File ("bin" + File.separator + "raf" + File.separator + "agentes" + File.separator );
-		listaClases =  agentsPath.list();
+		File agentsPath = new File ("target" + File.separator + "classes" + File.separator + "raf" + File.separator + "agentes" + File.separator );
+		listaClases =  Arrays.asList(agentsPath.list());
         
 //        setVisible(false);
 //
@@ -178,11 +183,24 @@ public class RaComponent implements AgencyListener{
 //        listScroller = new JScrollPane (list);
 //
 //        panel.add (listScroller);
+		
+		log = new ByteArrayOutputStream();
+	    PrintStream ps = new PrintStream(log);
+	    //System.setOut(ps);
 
         startAgency();
 	}
 	
 	
+	
+	public List<String> getListaClases() {
+		return listaClases;
+	}
+
+	public void setListaClases(List<String> listaClases) {
+		this.listaClases = listaClases;
+	}
+
 	public void cargar(String clase){   
         if (clase != null) {
             clase = clase.trim();
@@ -221,10 +239,19 @@ public class RaComponent implements AgencyListener{
     private void loadRa(String s){
       
         String name;
+        
+        File miDir = new File (".");
+        try {
+          System.out.println ("Directorio actual: " + miDir.getCanonicalPath());
+          }
+        catch(Exception e) {
+          e.printStackTrace();
+          }
+        
 
-        name = "raf.agentes." + s.split("\\.")[0];
+        name = "target.classes.raf.agentes." + s.split("\\.")[0];
         try{
-            Class<?> result;
+            Class result;
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
             result = loader.loadClass(name);
             if (result == null){
@@ -236,6 +263,7 @@ public class RaComponent implements AgencyListener{
             Object obs[] = {raAgency.generateName()};
 	        Ra agent = (Ra) cons[0].newInstance(obs);
             raAgency.addRaOnCreation (agent, null);
+            listaAgentes.add(s);
         }
         catch (InvocationTargetException e){
             System.err.println ("! GRaLauncher: No se ha podidio cargar la clase " + e);
@@ -299,6 +327,7 @@ public class RaComponent implements AgencyListener{
      */
     private void editDestroy(String clase){
         raAgency.destroyRa (this, clase);
+        listaAgentes.remove(clase);
     }
 
     /**

@@ -1,0 +1,44 @@
+.contenido{
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.agentes{
+    width: 50%;
+}
+.list-group-item{
+    height: 60px;
+}
+.mitad{
+    width: 50%;
+    float: left;
+}
+
+
+.btn{
+    margin-top: -10px;
+}
+
+.cargados{
+    background-color: #86CBFF;
+}
+
+.btn-cargar{
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.panel{
+    height: 250px;
+    overflow: auto;
+}
+.todo{
+    width: 100%;
+}
+
+.log{
+    background-color: #000;
+    color: green;
+    height: 250px;
+    overflow: auto;
+}

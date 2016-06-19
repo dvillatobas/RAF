@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import 'rxjs/Rx';
 
 
 export class Agente{
@@ -10,6 +11,8 @@ export class Agente{
     
 }
 
+const url = 'http://localhost:8080/';
+
 @Injectable()
 export class AgenteService {
 
@@ -18,8 +21,22 @@ export class AgenteService {
         private http:Http
     ) { }
 
-    refreshLog(){
-        this.http.get('');
+    getLog(){
+        return this.http.get(url + 'log')
+        .map(response => response.json());
+    }
+
+    addClass(clase : string){
+
+        let body = JSON.stringify(clase);
+
+        return this.http.put(url + 'addClass',body)
+        .map(response => response.json());
+    }
+
+    getAgentes(){
+        return this.http.get(url+'getAgentes')
+        .map(response => response.json());
     }
 
 }

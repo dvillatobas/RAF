@@ -30,8 +30,9 @@ export class UiAngularAppComponent {
     private aService:AgenteService
   ){
     this.cargar = true;
-    this.agentes = ['hola', 'mensaje', 'otro mas'];
-    console.log(this.agentes);
+    this.aService.getAgentes().subscribe(
+      agentes => this.agentes = agentes
+    );
     
 
   }
@@ -45,7 +46,9 @@ export class UiAngularAppComponent {
     let a = new Agente(this.last,agente);
     this.agentesCargados.push(a);
     this.cargar = !this.cargar;
-
+    this.aService.addClass(agente).subscribe(
+      clase => console.log('ok')
+    );
   }
 
   eliminarAgente(agente:Agente){
