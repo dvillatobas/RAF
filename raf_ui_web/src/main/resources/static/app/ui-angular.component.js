@@ -34,12 +34,7 @@ var UiAngularAppComponent = (function () {
         this.aService.addClass(agente).subscribe(function (clase) { return console.log('ok'); });
     };
     UiAngularAppComponent.prototype.eliminarAgente = function (agente) {
-        var _this = this;
-        console.log(agente.id);
-        setTimeout(function () { return _this.del(agente); }, 2000);
-    };
-    UiAngularAppComponent.prototype.del = function (a) {
-        this.agentesCargados.splice(this.agentesCargados.indexOf(a), 1);
+        this.agentesCargados.splice(this.agentesCargados.indexOf(agente), 1);
     };
     UiAngularAppComponent = __decorate([
         core_1.Component({

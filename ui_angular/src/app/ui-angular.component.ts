@@ -52,13 +52,10 @@ export class UiAngularAppComponent {
   }
 
   eliminarAgente(agente:Agente){
-    console.log(agente.id);
-    setTimeout(() => this.del(agente), 2000)
+    this.agentesCargados.splice(this.agentesCargados.indexOf(agente),1);
     
   }
-  del(a:Agente){
-    this.agentesCargados.splice(this.agentesCargados.indexOf(a),1);
-  }
+ 
 
   
 

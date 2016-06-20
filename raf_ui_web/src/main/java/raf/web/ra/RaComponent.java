@@ -186,7 +186,7 @@ public class RaComponent implements AgencyListener{
 		
 		log = new ByteArrayOutputStream();
 	    PrintStream ps = new PrintStream(log);
-	    //System.setOut(ps);
+	    System.setOut(ps);
 
         startAgency();
 	}
