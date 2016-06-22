@@ -303,7 +303,8 @@ public class AgencyComponent implements AgencyListener{
         String strLoPort = null;
         int loPort = port;
         
-        server = s;
+        server = s.split("\\/")[1];
+        System.out.println(s);
 
         try{
             

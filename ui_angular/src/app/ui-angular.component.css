@@ -42,3 +42,7 @@
     height: 250px;
     overflow: auto;
 }
+
+.sep{
+    margin-left: 20px;
+}

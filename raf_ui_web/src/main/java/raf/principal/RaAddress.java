@@ -43,13 +43,7 @@ public final class RaAddress implements Serializable{
         this.name = name;
     }    
     
-    public int compareTo(RaAddress ra){
-    	if (name == ra.name && host.getHostAddress().contentEquals(ra.host.getHostAddress()) && port == ra.port) {
-			return 0;
-		}else{
-			return 1;
-		}
-    }
+    
  
     public String toString() {
     	if(host!=null) return host.toString() + ":" + port + ":" + name;

@@ -13,10 +13,23 @@
     <div [class]="cargar?'list-group pull-left panel mitad':'list-group todo pull-left panel'" *ngIf="agentesCargados">
       <div *ngFor="let a of agentesCargados" class="list-group-item cargados">
         <h4>({{a.id}}) {{a.name}}
-            <button (click)="eliminarAgente(a)" class="btn btn-danger pull-right">
+            <span class="sep">
+            <button (click)="eliminarAgente(a)" class="sep btn btn-danger pull-right">
               <span class="glyphicon glyphicon-remove"></span>
             </button>
+            </span>
+            <span class="sep">
+            <button (click)=" mostrarAgencias(a)" class="sep btn btn-primary pull-right">
+              <span class="glyphicon glyphicon-send"></span>
+            </button>
+            </span>
           </h4>
+          <div class="list-group" *ngIf="selected === a">
+            <div class="list-group-item" *ngFor="let ag of agencias">
+            <h5 (click)="enviarAgente(a,ag)">{{ag}}</h5>
+          </div>
+          </div>
+          
       </div>
     </div>
 

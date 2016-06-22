@@ -17,7 +17,7 @@ var LogComponent = (function () {
         this.lineas = [];
     }
     LogComponent.prototype.ngOnInit = function () {
-        this.refreshLog(3000);
+        this.refreshLog(1500);
     };
     LogComponent.prototype.refreshLog = function (time) {
         var _this = this;

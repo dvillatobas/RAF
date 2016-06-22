@@ -31,15 +31,29 @@ var AgenteService = (function () {
     AgenteService.prototype.addClass = function (clase) {
         var body = clase;
         return this.http.put(url + 'addClass', body)
-            .map(function (response) { return response; });
+            .map(function (response) { return response.json(); });
     };
     AgenteService.prototype.removeClass = function (clase) {
         var body = clase;
         return this.http.put(url + 'removeClass', body)
-            .map(function (response) { return response; });
+            .map(function (response) { return response.json(); });
     };
     AgenteService.prototype.getAgentes = function () {
         return this.http.get(url + 'getAgentes')
+            .map(function (response) { return response.json(); });
+    };
+    AgenteService.prototype.getAgencias = function () {
+        return this.http.get(url + 'getAgencias')
+            .map(function (response) { return response.json(); });
+    };
+    AgenteService.prototype.sendAgent = function (agente, agencia) {
+        console.log(agencia);
+        var body = JSON.stringify([agente, agencia]);
+        var headers = new http_1.Headers({
+            'Content-Type': 'application/json'
+        });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.put(url + 'sendAgent', body, options)
             .map(function (response) { return response.json(); });
     };
     AgenteService = __decorate([

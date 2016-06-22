@@ -19,31 +19,43 @@ var UiAngularAppComponent = (function () {
         this.aService = aService;
         this.agentes = [];
         this.agentesCargados = [];
+        this.agencias = [];
         this.last = 0;
         this.cargar = true;
+        this.showAgencys = false;
         this.aService.getAgentes().subscribe(function (agentes) { return _this.agentes = agentes; });
     }
     UiAngularAppComponent.prototype.mostrarAgentes = function () {
         this.cargar = !this.cargar;
     };
     UiAngularAppComponent.prototype.cargarAgente = function (agente) {
-        var _this = this;
-        this.aService.addClass(agente).subscribe(function (clase) {
-            if (clase != 'error') {
-                _this.last++;
-                var a = new agente_service_1.Agente(_this.last, agente);
-                _this.agentesCargados.push(a);
-                _this.cargar = !_this.cargar;
-            }
-        });
+        this.last++;
+        var a = new agente_service_1.Agente(this.last, agente);
+        this.agentesCargados.push(a);
+        this.cargar = !this.cargar;
+        this.aService.addClass(agente).subscribe();
     };
     UiAngularAppComponent.prototype.eliminarAgente = function (agente) {
+        this.agentesCargados.splice(this.agentesCargados.indexOf(agente), 1);
+        this.aService.removeClass(agente.name).subscribe();
+    };
+    UiAngularAppComponent.prototype.mostrarAgencias = function (a) {
         var _this = this;
-        this.aService.removeClass(agente.name).subscribe(function (clase) {
-            if (clase != 'error') {
-                _this.agentesCargados.splice(_this.agentesCargados.indexOf(agente), 1);
-            }
-        });
+        this.selected = a;
+        this.showAgencys = !this.showAgencys;
+        if (this.showAgencys) {
+            this.aService.getAgencias().subscribe(function (resp) {
+                _this.agencias = resp;
+            });
+        }
+        else {
+            this.agencias = [];
+            this.selected = undefined;
+        }
+    };
+    UiAngularAppComponent.prototype.enviarAgente = function (agente, agencia) {
+        this.agencias = [];
+        this.aService.sendAgent(agente.name, agencia).subscribe();
     };
     UiAngularAppComponent = __decorate([
         core_1.Component({

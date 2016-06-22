@@ -9,8 +9,9 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import raf.principal.RaAddress;
 import raf.principal.RaMessage;
@@ -70,8 +71,8 @@ public class RaModel
                 else
                 if ( message.kind.equals("AGENCY_ONLINE") ){
                     System.out.println ("ReceiveMessageThread: Ha llegado un mensaje AGENCY_ONLINE: " + message.sender.host.toString());
-                    int puerto = message.sender.port; 
-                    agencys.put ((message.sender.host.toString() + ":" + Integer.toString (puerto)), message.sender);
+                    
+                    agencys.add (message.sender);
                     raModel.broadcast();
                 }
                 else if ( message.kind.equals("AGENCY_OFFLINE") ){
@@ -187,7 +188,7 @@ public class RaModel
     /**
      * Todas las agencias conectadas en el dominio
      */
-    private Hashtable<String, RaAddress> agencys;
+    private ArrayList<RaAddress> agencys;
 
     /**
      * Direccion de este servidor.
@@ -213,7 +214,7 @@ public class RaModel
      * Crea un nuevo servidor que maneja el estado del dominio.
      */
     public RaModel(){
-        agencys = new Hashtable<String, RaAddress>();
+        agencys = new ArrayList<RaAddress>();
     }
 
     /**
@@ -238,22 +239,22 @@ public class RaModel
      
      private void broadcast(){
         RaMessage message = null;
-        Hashtable<String, RaAddress> servers = null;
+        ArrayList<RaAddress> servers = new ArrayList<RaAddress>();
         ByteArrayOutputStream bos = null;
         ObjectOutputStream oos = null;
 
         try{
             synchronized (this){
-                servers =  (Hashtable<String, RaAddress>) agencys.clone();
+                servers.addAll(agencys);
             }
             bos = new ByteArrayOutputStream();
             oos = new ObjectOutputStream (bos);
             oos.writeObject (servers);
 
             // envia un mensaje AGENCYS a todos los servidores conectados.
-            for (Enumeration<RaAddress> e = servers.elements(); e.hasMoreElements();){
+            for (RaAddress ra : servers){
                 message = new RaMessage (raAddress,
-                                            (RaAddress)e.nextElement(),
+                                            ra,
                                             "AGENCYS",
                                             "",
                                             bos.toByteArray());
@@ -303,5 +304,13 @@ public class RaModel
             System.exit(1);
         }
     }
+
+	public ArrayList<RaAddress> getAgencys() {
+		
+		
+		return agencys;
+	}
+    
+    
 
 }

@@ -15,7 +15,7 @@ export class LogComponent implements OnInit {
 
     ngOnInit() { 
         
-        this.refreshLog(3000);
+        this.refreshLog(1500);
     }
 
     refreshLog(time:number){

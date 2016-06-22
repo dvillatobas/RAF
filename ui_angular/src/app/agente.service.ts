@@ -31,18 +31,35 @@ export class AgenteService {
         let body = clase;
 
         return this.http.put(url + 'addClass',body)
-        .map(response => response);
+        .map(response => response.json());
     }
 
     removeClass(clase : string){
          let body = clase;
 
         return this.http.put(url + 'removeClass',body)
-        .map(response => response);
+        .map(response => response.json());
     }
 
     getAgentes(){
         return this.http.get(url+'getAgentes')
+        .map(response => response.json());
+    }
+
+    getAgencias(){
+        return this.http.get(url+'getAgencias')
+        .map(response => response.json());
+    }
+
+    sendAgent(agente:string, agencia:string){
+        console.log(agencia);
+        
+        let body = JSON.stringify([agente, agencia]);
+        let headers = new Headers({
+            'Content-Type': 'application/json'
+        });
+        let options = new RequestOptions({ headers });
+        return this.http.put(url + 'sendAgent',body,options)
         .map(response => response.json());
     }
 

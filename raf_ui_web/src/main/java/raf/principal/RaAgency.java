@@ -1,7 +1,17 @@
 package raf.principal;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.net.InetAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -26,7 +36,7 @@ public class RaAgency
     private Object parent;
 
   
-    private Hashtable<?, ?> agencys;
+    private ArrayList<RaAddress> agencys;
 
     
 
@@ -115,7 +125,7 @@ public class RaAgency
                     ByteArrayInputStream bis = new ByteArrayInputStream(message.binary);
                     ObjectInputStream ois = new ObjectInputStream (bis);
                     synchronized (this){
-                        agencys = (Hashtable<?, ?>) ois.readObject();
+                        agencys =  (ArrayList<RaAddress>) ois.readObject();
                     }
                 }
                 else if ( message.kind.equals("GET_CLASS") ){
