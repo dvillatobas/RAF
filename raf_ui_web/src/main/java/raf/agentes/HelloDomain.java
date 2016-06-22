@@ -1,6 +1,7 @@
 package raf.agentes;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -24,7 +25,7 @@ public class HelloDomain extends Ra
 	/**
      * List of all the servers in the domain.
      */
-    Vector<RaAddress> v;
+    ArrayList<RaAddress> v;
 
     /**
      * Points to the next destination in v.
@@ -46,15 +47,9 @@ public class HelloDomain extends Ra
      * Initializes v with all servers connected to the domain.
      */
     public void onCreate(){
-        i = 0;
-        v = new Vector<RaAddress>();
-        RaAddress address;
-        Enumeration<?> en = agency.getServers(this).elements();
-        while (en.hasMoreElements()){
-           address = (RaAddress) en.nextElement();
-            v.addElement (address);
-         
-        }
+       
+        v = agency.getServers(this);
+       
        
     }
 
@@ -72,7 +67,7 @@ public class HelloDomain extends Ra
     public void run(){
         try{
             if (i < v.size()){
-                destination = (RaAddress) v.elementAt(i);
+                destination = v.get(i);
                 ++i;
                 System.out.println("Try to dispatch");
                 fireDispatchRequest();

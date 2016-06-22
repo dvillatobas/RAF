@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -28,7 +29,7 @@ public class Chat extends Ra
 	/**
      * List of all the servers in the domain.
      */
-    Vector v;
+    ArrayList<RaAddress> v;
     String s; /* cadena de conversacion
     public String t;
     
@@ -48,13 +49,8 @@ public class Chat extends Ra
         i = 0;
         //s = ' ';
          s = "hola que tal";
-        v = new Vector();
-        RaAddress address;
-        Enumeration en = agency.getServers(this).elements();
-        while (en.hasMoreElements()){
-            address = (RaAddress) en.nextElement();
-            v.addElement (address);
-        }
+        v = agency.getServers(this);
+        
     }
 
     /**
@@ -90,7 +86,7 @@ public class Chat extends Ra
        
         try{
             if (i < v.size()){
-                destination = (RaAddress) v.elementAt(i);
+                destination = v.get(i);
                 ++i;
                 System.out.println("Intentando disparar");
                 fireDispatchRequest();

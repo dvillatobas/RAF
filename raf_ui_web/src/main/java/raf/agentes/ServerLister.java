@@ -1,6 +1,6 @@
 package raf.agentes;
 
-import java.util.Enumeration;
+import java.util.ArrayList;
 
 import raf.principal.Ra;
 import raf.principal.RaAddress;
@@ -34,12 +34,12 @@ public class ServerLister extends Ra
      * Prints out the names of all servers connected to the domain.
      */
     public void run(){
-        RaAddress address;
-        Enumeration<?> en = agency.getServers(this).elements();
+        ArrayList<RaAddress> en = agency.getServers(this);
         System.out.println("---------------------------------------------");
         System.out.println("Servers connected to the domain:");
-        while (en.hasMoreElements()){
-            address = (RaAddress) en.nextElement();
+        for(RaAddress address : en){
+        	
+            
             System.out.println (address.host.toString() + ":" + Integer.toString(address.port));
         }
         System.out.println("---------------------------------------------");

@@ -496,10 +496,10 @@ public class RaAgency
         }
     }
 
-    public Hashtable<?, ?> getServers (Object sender){
-        Hashtable<?, ?> result = null;
+    public ArrayList<RaAddress> getServers (Object sender){
+    	ArrayList<RaAddress> result = null;
         synchronized (this){
-            if (agencys != null) result = (Hashtable<?, ?>) agencys.clone();
+            if (agencys != null) result = new ArrayList<RaAddress>(agencys);
         }
         return result;
     }

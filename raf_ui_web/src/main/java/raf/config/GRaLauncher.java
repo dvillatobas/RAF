@@ -267,32 +267,32 @@ public class GRaLauncher extends JFrame implements ActionListener,
   
         }
         if ( e.getActionCommand().equals ("editSendTo") ) {
-        	 int i = 0;
-	         Object[] v = new Object[50];
-	         
-	         Enumeration<?> en = raAgency.getServers(this).elements();
-	         
-	         while (en.hasMoreElements()){
-	        	 v[i] = en.nextElement();
-	        	 i = i + 1;
-	         }
-	         String s = (String) JOptionPane.showInputDialog(
-	             frame2,
-	             "Elige una Agencia",
-	             "Agencia Destino",
-	             JOptionPane.PLAIN_MESSAGE,
-		     icon,
-		     v,
-		     null);
-             if (s != null) {
-                 s = s.trim();
-                 if (s.length() >0 ) {
-                   System.out.println (s);
-                     editSendTo (s);
-                     }
-             }
-     
-            editSendTo(s);
+//        	 int i = 0;
+//	         Object[] v = new Object[50];
+//	         
+//	         Enumeration<?> en = raAgency.getServers(this);
+//	         
+//	         while (en.hasMoreElements()){
+//	        	 v[i] = en.nextElement();
+//	        	 i = i + 1;
+//	         }
+//	         String s = (String) JOptionPane.showInputDialog(
+//	             frame2,
+//	             "Elige una Agencia",
+//	             "Agencia Destino",
+//	             JOptionPane.PLAIN_MESSAGE,
+//		     icon,
+//		     v,
+//		     null);
+//             if (s != null) {
+//                 s = s.trim();
+//                 if (s.length() >0 ) {
+//                   System.out.println (s);
+//                     editSendTo (s);
+//                     }
+//             }
+//     
+//            editSendTo(s);
         }
         if ( e.getActionCommand().equals ("editDestroy") ) {
             editDestroy();

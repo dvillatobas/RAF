@@ -25,9 +25,8 @@ public class RaController {
 	
 	@RequestMapping(value = "/log", method = RequestMethod.GET)
 	public List<String> log(){
-		if(agencia.getLog()== null){
-			System.err.println("nulo");
-		}
+		
+		
 		List<String> lista = Arrays.asList(agencia.getLog().split("\\n"));
 		
 		return lista;
