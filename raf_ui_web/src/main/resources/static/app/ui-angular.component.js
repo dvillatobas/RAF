@@ -27,14 +27,23 @@ var UiAngularAppComponent = (function () {
         this.cargar = !this.cargar;
     };
     UiAngularAppComponent.prototype.cargarAgente = function (agente) {
-        this.last++;
-        var a = new agente_service_1.Agente(this.last, agente);
-        this.agentesCargados.push(a);
-        this.cargar = !this.cargar;
-        this.aService.addClass(agente).subscribe(function (clase) { return console.log('ok'); });
+        var _this = this;
+        this.aService.addClass(agente).subscribe(function (clase) {
+            if (clase != 'error') {
+                _this.last++;
+                var a = new agente_service_1.Agente(_this.last, agente);
+                _this.agentesCargados.push(a);
+                _this.cargar = !_this.cargar;
+            }
+        });
     };
     UiAngularAppComponent.prototype.eliminarAgente = function (agente) {
-        this.agentesCargados.splice(this.agentesCargados.indexOf(agente), 1);
+        var _this = this;
+        this.aService.removeClass(agente.name).subscribe(function (clase) {
+            if (clase != 'error') {
+                _this.agentesCargados.splice(_this.agentesCargados.indexOf(agente), 1);
+            }
+        });
     };
     UiAngularAppComponent = __decorate([
         core_1.Component({

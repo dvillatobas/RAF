@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/Rx';
 
 
@@ -28,15 +28,24 @@ export class AgenteService {
 
     addClass(clase : string){
 
-        let body = JSON.stringify(clase);
+        let body = clase;
 
         return this.http.put(url + 'addClass',body)
-        .map(response => response.json());
+        .map(response => response);
+    }
+
+    removeClass(clase : string){
+         let body = clase;
+
+        return this.http.put(url + 'removeClass',body)
+        .map(response => response);
     }
 
     getAgentes(){
         return this.http.get(url+'getAgentes')
         .map(response => response.json());
     }
+
+
 
 }

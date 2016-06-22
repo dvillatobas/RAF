@@ -1,8 +1,21 @@
-import { Component, Inject} from '@angular/core';
-import { AgenteService, Agente } from './agente.service';
-import { CollapseDirective } from 'ng2-bootstrap/ng2-bootstrap';
-import { LogComponent } from './log.component/log.component';
-import { Http, HTTP_PROVIDERS } from '@angular/http';
+import {
+  Component,
+  Inject
+} from '@angular/core';
+import {
+  AgenteService,
+  Agente
+} from './agente.service';
+import {
+  CollapseDirective
+} from 'ng2-bootstrap/ng2-bootstrap';
+import {
+  LogComponent
+} from './log.component/log.component';
+import {
+  Http,
+  HTTP_PROVIDERS
+} from '@angular/http';
 
 @Component({
   moduleId: module.id,
@@ -20,43 +33,55 @@ export class UiAngularAppComponent {
 
 
   private cargar;
-  private agentes:String[] = [];
-  private agentesCargados:Agente[] = [];
-  private last=0;
+  private agentes: String[] = [];
+  private agentesCargados: Agente[] = [];
+  private last = 0;
 
 
 
   constructor(
-    private aService:AgenteService
-  ){
+    private aService: AgenteService
+  ) {
     this.cargar = true;
     this.aService.getAgentes().subscribe(
       agentes => this.agentes = agentes
     );
-    
+
 
   }
 
-  mostrarAgentes(){
+  mostrarAgentes() {
     this.cargar = !this.cargar;
   }
 
-  cargarAgente(agente:string){
-    this.last++;
-    let a = new Agente(this.last,agente);
-    this.agentesCargados.push(a);
-    this.cargar = !this.cargar;
+  cargarAgente(agente: string) {
+
+
     this.aService.addClass(agente).subscribe(
-      clase => console.log('ok')
+      clase => {
+        if (clase != 'error') {
+          this.last++;
+          let a = new Agente(this.last, agente);
+          this.agentesCargados.push(a);
+          this.cargar = !this.cargar;
+        }
+      }
     );
   }
 
-  eliminarAgente(agente:Agente){
-    this.agentesCargados.splice(this.agentesCargados.indexOf(agente),1);
-    
-  }
- 
+  eliminarAgente(agente: Agente) {
 
-  
+    this.aService.removeClass(agente.name).subscribe(
+      clase => {
+        if (clase != 'error') {
+          this.agentesCargados.splice(this.agentesCargados.indexOf(agente), 1);
+        }
+      }
+    );
+
+  }
+
+
+
 
 }

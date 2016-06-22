@@ -1,11 +1,9 @@
 package raf.web.ra;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.net.InetAddress;
@@ -15,6 +13,7 @@ import java.util.List;
 import java.util.Properties;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.SessionScope;
 
 import raf.principal.AgencyEvent;
 import raf.principal.AgencyListener;
@@ -25,7 +24,8 @@ import raf.principal.RaAgency;
 import raf.principal.RaClassLoader;
 
 @Component
-public class RaComponent implements AgencyListener{
+@SessionScope
+public class AgencyComponent implements AgencyListener{
 	
 	private String strConfigFile = "target" + File.separator + "classes" + File.separator + "raf" + File.separator
             + "config"
@@ -51,14 +51,25 @@ public class RaComponent implements AgencyListener{
     /**
      * N� puerto para las conexiones, por defecto 10101.
      */
+    
+    private static int numberPort = 10000;
+    
     private int port;
     
     private List<String> listaClases;
     
-    public ByteArrayOutputStream log;
+    private String log = "";
 	
     
-    private List<String> listaAgentes;
+    public String getLog() {
+		return log;
+	}
+
+	public void setLog(String log) {
+		this.log = log;
+	}
+
+	private List<String> listaAgentes;
     
     public void addListaAgentes(String agente){
     	listaAgentes.add(agente);
@@ -76,7 +87,7 @@ public class RaComponent implements AgencyListener{
 		this.listaAgentes = listaAgentes;
 	}
 
-	public RaComponent() {
+	public AgencyComponent() {
 		super();
 		
 		long byteCodeDelay;
@@ -97,12 +108,15 @@ public class RaComponent implements AgencyListener{
             System.err.println ("GRaLauncher: Ha fallado la lectura del fichero!");
         }
 
-        try {
-            port = Integer.parseInt(props.getProperty("port", "10101"));
-        }
-        catch (NumberFormatException e){
-            port = 10101;
-        }
+        numberPort++;
+        port = numberPort;
+        
+//        try {
+//            port = Integer.parseInt(props.getProperty("port", "10101"));
+//        }
+//        catch (NumberFormatException e){
+//            port = 10101;
+//        }
         try {
             byteCodeDelay = Long.parseLong(props.getProperty("byteCodeDelay", "100000"));
         }
@@ -127,11 +141,11 @@ public class RaComponent implements AgencyListener{
             }
         }
         catch (UnknownHostException e){
-            System.out.println("! GRaLauncher: raServer no valido." + e);
+            agencyPrint("! GRaLauncher: raServer no valido." + e);
             raServer = null;
         }
 
-        System.out.println ("puerto: " + port);
+        agencyPrint ("puerto: " + port);
 
         // lanza una nuva agencia
         classManager = new ClassManager (byteCodeDelay, props.getProperty("agentsPath"));
@@ -184,12 +198,13 @@ public class RaComponent implements AgencyListener{
 //
 //        panel.add (listScroller);
 		
-		log = new ByteArrayOutputStream();
-	    PrintStream ps = new PrintStream(log);
-	    System.setOut(ps);
+//		log = new ByteArrayOutputStream();
+//	    PrintStream ps = new PrintStream(log);
+//	    System.setOut(ps);
 
         startAgency();
 	}
+	
 	
 	
 	
@@ -247,6 +262,8 @@ public class RaComponent implements AgencyListener{
             RaClassLoader loader = new RaClassLoader(classManager, null, null);
             result = loader.loadClass(name);
             
+            
+            
             if (result == null){
                 System.err.println ("GRaLauncher: No se pudo cargar la clase! clase no encontrada!");
                 return;
@@ -254,14 +271,9 @@ public class RaComponent implements AgencyListener{
 
             Constructor<?> cons[] = result.getConstructors();
             Object obs[] = {raAgency.generateName()};
-	        Object agent =  cons[0].newInstance(obs);
-	        if(agent instanceof Ra){
-	        	Ra a = (Ra) agent;
-	        	raAgency.addRaOnCreation (a, null);
-	            listaAgentes.add(s);
-	        }else{
-	        	System.out.println("no va");
-	        }
+            Object a = cons[0].newInstance(obs);
+            
+            raAgency.addRaOnCreation ((Ra)a, null);
 	        
         }
         catch (InvocationTargetException e){
@@ -333,7 +345,7 @@ public class RaComponent implements AgencyListener{
      * Inicializa el Thread del RaAgency.
      */
     private void startAgency(){
-	System.out.println ("Inicializando la Agencia");
+	agencyPrint ("Inicializando la Agencia");
         raAgency.startAgency (this, port, raServer);
     }
 
@@ -341,7 +353,7 @@ public class RaComponent implements AgencyListener{
      * Para el Thread de la agencia.
      */
     private void stopAgency(){
-	System.out.println ("Parando la Agencia");
+	agencyPrint ("Parando la Agencia");
         raAgency.stopAgency (this);
     }
     
@@ -356,7 +368,7 @@ public class RaComponent implements AgencyListener{
 //        	selectedRa = null;
 //        }else{
 //        	selectedRa = listModel.elementAt (pos);
-//            System.out.println ("seleccionado: " + selectedRa);
+//            AgencyComponent.agencyPrint ("seleccionado: " + selectedRa);
 //        }
 //        
 //    }
@@ -388,7 +400,9 @@ public class RaComponent implements AgencyListener{
 	}
 
 	
-	
+	public void agencyPrint(String s){
+		log = log + "\n" + s;
+	}
 	
 	
 	

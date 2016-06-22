@@ -1,30 +1,24 @@
 package raf.agentes;
 
-import java.io.Serializable;
-import java.lang.InterruptedException;
 import java.util.Enumeration;
 import java.util.Vector;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.*;
-import java.net.*;
-import javax.swing.text.*;
-import javax.swing.event.*;
-import javax.swing.border.*;
-
-
 import raf.principal.Ra;
 import raf.principal.RaAddress;
-import raf.principal.RaEvent;
 
 
 public class Chat extends Ra
 {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * List of all the servers in the domain.
      */
-    Vector v;
+    Vector<RaAddress> v;
     String s; /* cadena de conversacion
     public String t;
     
@@ -44,9 +38,9 @@ public class Chat extends Ra
         i = 0;
         //s = ' ';
          s = "hola que tal";
-        v = new Vector();
+        v = new Vector<RaAddress>();
         RaAddress address;
-        Enumeration en = agency.getServers(this).elements();
+        Enumeration<?> en = agency.getServers(this).elements();
         while (en.hasMoreElements()){
             address = (RaAddress) en.nextElement();
             v.addElement (address);
@@ -100,7 +94,11 @@ public class Chat extends Ra
     }
 
    public class TextComponent extends JFrame implements java.awt.event.ActionListener{
-    JTextArea textPane;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JTextArea textPane;
     JTextArea changeLog;
     String newline;
     

@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RaController {
 	
-	
+	@Autowired
+	RaDomainComponent domain;
 	
 	@Autowired
-	RaComponent agencia;
+	AgencyComponent agencia;
 	
 	@RequestMapping(value = "/log", method = RequestMethod.GET)
 	public List<String> log(){
-		List<String> lista = Arrays.asList(agencia.log.toString().split("\\n"));
+		if(agencia.getLog()== null){
+			System.err.println("nulo");
+		}
+		List<String> lista = Arrays.asList(agencia.getLog().split("\\n"));
 		
 		return lista;
 	}
@@ -40,14 +44,26 @@ public class RaController {
 	
 	@RequestMapping(value = "/addClass", method = RequestMethod.PUT)
 	public String addClass(@RequestBody String clase){
-		agencia.cargar(clase);
+		try {
+			agencia.cargar(clase);
+		} catch (Exception e) {
+			System.out.println(e);
+			agencia.agencyPrint(e.getMessage());
+			return "error";
+		}
+		
 		
 		return clase;
 	}
 	
-	@RequestMapping(value = "/removeClass", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/removeClass", method = RequestMethod.PUT)
 	public String removeClass(@RequestBody String clase){
-		agencia.destroy(clase);
+		try {
+			agencia.destroy(clase);
+		} catch (Exception e) {
+			System.out.println(e);
+			return "error";
+		}
 		
 		return clase;
 	}

@@ -1,21 +1,24 @@
-package raf.raservidor;
+package raf.web.ra;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Properties;
 
-/**
- * La clase principal del servidor que gestiona todos los servidores del dominio.
- */
-public class RaDomain{
+import org.springframework.stereotype.Component;
+
+import raf.raservidor.RaDomain;
+import raf.raservidor.RaModel;
+
+@Component
+public class RaDomainComponent{
 
     /**
      * Donde esta la configuracion del servidor.
      */
-    String strConfigFile = "bin" + File.separator + "raf"
-                          + File.separator
-                          + "config"
-                          + File.separator
-                          + "radomain.config";
+    String strConfigFile = "target" + File.separator + "classes" + File.separator + "raf" 
+    						+ File.separator + "config" + File.separator + "radomain.config";
 
     /**
      * Puerto en el que escucha.
@@ -30,7 +33,7 @@ public class RaDomain{
     /**
      * Crea un nuevo RaModel e inicia el servicio que escucha en la red.
      */
-    public RaDomain(){
+    public RaDomainComponent(){
         Properties props = new Properties ();
 
         // lee las propiedades del fichero
@@ -57,14 +60,10 @@ public class RaDomain{
         // Lanza el servidor RaModel
         raModel = new RaModel();
         raModel.startService(port);
+       
     }
 
-    /**
-     * Crea un nuevo servidor para gestionar el dominio.
-     */
-    public static void main (String[] args){
-        new RaDomain();
-    }
+   
 
 
 }

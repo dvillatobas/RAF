@@ -11,7 +11,9 @@ public class RaDomain{
     /**
      * Donde esta la configuracion del servidor.
      */
-    String strConfigFile = "raf"
+    String strConfigFile = "target" + File.separator + "classes"
+    					  + File.separator
+            			  + "raf"
                           + File.separator
                           + "config"
                           + File.separator

@@ -10,7 +10,7 @@ public class HelloAgent extends Ra
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+
 	/**
      * How often did the agent travel?
      */

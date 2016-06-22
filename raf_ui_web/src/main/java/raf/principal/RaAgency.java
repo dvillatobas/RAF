@@ -90,6 +90,7 @@ public class RaAgency
                 outStream = new ObjectOutputStream(
                                     socket.getOutputStream());
                 address = socket.getInetAddress();
+                System.out.println(address);
             }
             catch (IOException e){
                 System.err.println("! ReceiveMessageThread.run: " + e);
@@ -262,6 +263,7 @@ public class RaAgency
                 try { sleep(10000); } catch(Exception e) {}; 
                 if (outStream != null) outStream.close();
                 if (socket != null) socket.close();
+                System.out.println("SendMessageThread: All closed");
             }
             catch (IOException e){
 
@@ -339,6 +341,7 @@ public class RaAgency
 
     
     public synchronized void addRaOnCreation(Ra ra, InetAddress sender){
+    	
         ra.setAgency(this);
         ra.addRaListener(this);
         ra.addRaMessageListener(this);
@@ -409,7 +412,7 @@ public class RaAgency
         this.raServer = raServer;
         try{
              agencyAddress = new RaAddress(InetAddress.getLocalHost(), port, null);
-
+             System.out.println(agencyAddress);
              serverSocket = new ServerSocket(port);
              System.out.println ("Escuchando en el puerto: " + port);
         }

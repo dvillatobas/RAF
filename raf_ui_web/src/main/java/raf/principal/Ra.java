@@ -16,7 +16,7 @@ public class Ra implements Runnable, Serializable
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	
 
 
 	/**
@@ -136,6 +136,8 @@ public class Ra implements Runnable, Serializable
     public Ra(String name){
         this.name = name;
     }
+    
+    
 
     /**
      *

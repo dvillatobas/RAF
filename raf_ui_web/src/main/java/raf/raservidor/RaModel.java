@@ -63,7 +63,7 @@ public class RaModel
 
             try{
                 message = (RaMessage) inStream.readObject();
-                if ( !message.recipient.host.equals(raAddress.host) ){
+                if ( !(message.recipient.port == raAddress.port) ){
                     // se reenvia el mensaje
                     new SendMessageThread(message).start();
                 }
@@ -145,6 +145,7 @@ public class RaModel
          */
         private SendMessageThread(RaMessage msg){
             this.msg = msg;
+//            System.out.println(msg);
         }
 
         /**
@@ -158,8 +159,7 @@ public class RaModel
             try {
                 socket = new Socket(msg.recipient.host, msg.recipient.port);
                 System.out.println ("SendMessageThread: socket creado a: " + msg.recipient.host.toString() + " " + msg.recipient.port);
-                outStream = new ObjectOutputStream(
-                                    socket.getOutputStream());
+                outStream = new ObjectOutputStream(socket.getOutputStream());
                 inStream = new ObjectInputStream(
                                 new BufferedInputStream(
                                     socket.getInputStream()));

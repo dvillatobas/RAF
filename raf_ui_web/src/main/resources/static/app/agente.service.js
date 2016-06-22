@@ -29,9 +29,14 @@ var AgenteService = (function () {
             .map(function (response) { return response.json(); });
     };
     AgenteService.prototype.addClass = function (clase) {
-        var body = JSON.stringify(clase);
+        var body = clase;
         return this.http.put(url + 'addClass', body)
-            .map(function (response) { return response.json(); });
+            .map(function (response) { return response; });
+    };
+    AgenteService.prototype.removeClass = function (clase) {
+        var body = clase;
+        return this.http.put(url + 'removeClass', body)
+            .map(function (response) { return response; });
     };
     AgenteService.prototype.getAgentes = function () {
         return this.http.get(url + 'getAgentes')
